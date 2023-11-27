@@ -1,3 +1,7 @@
+.page {
+  overflow-x: hidden;
+}
+
 .f {
   position: relative;
   display: flex;
