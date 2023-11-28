@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+main {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: #fceaea;
+}
+
+#root {
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  gap: 5%;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+  .container {
+    flex-direction: column;
+    padding: 30px 0;
+  }
+}
+
+.text-example,
+.video-example {
+  height: 70vh;
+  width: 20vw;
+  border: 5px solid #131313;
+  cursor: pointer;
+  box-shadow: inset 5px 5px 15px rgb(0 0 0 / 45%),
+    inset -5px -5px 15px rgb(225 255 255 / 15%),
+    5px 5px 15px rgb(0 0 0 / 30%), -5px -5px 15px rgb(225 255 255 / 15%);
+}
+
+.image-example {
+  position: relative;
+  height: 70vh;
+  width: 20vw;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+  .image-example {
+    min-height: 25%;
+  }
+}
+
+.lol {
+  width: 100%;
+  height: 100%;
+  border: 5px solid #131313;
+  box-shadow: inset 5px 5px 15px rgb(0 0 0 / 45%),
+    inset -5px -5px 15px rgb(225 255 255 / 15%),
+    5px 5px 15px rgb(0 0 0 / 30%), -5px -5px 15px rgb(225 255 255 / 15%);
+  filter: url(#noise);
+}
+
+.image-example svg {
+  position: absolute;
+}
+
+.text-example,
+.video-example {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  font-size: 55px;
+  font-weight: 700;
+  font-family: 'Trispace', sans-serif;
+  background: #ffffff;
+}
+
+@media screen and (max-width: 998px) {
+
+  .text-example,
+  .video-example {
+    font-size: 32px;
+  }
+}
+
+.text-example span,
+.video-example span {
+  color: #000000;
+  display: inline-block;
+  z-index: 10;
+}
+
+.-media {
+  z-index: 0;
+}
+
+.-exclusion .mf-cursor-text {
+  color: currentColor;
+}
+
+.-exclusion.-media {
+  filter: invert(1);
+}
+
+.-exclusion {
+  z-index: 11;
+}
+
+.lol img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.-purple {
+  color: #8000807f;
+}
+
+.mf-cursor-text {
+  font-family: 'Splash', cursive;
+}
+
+.follow-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.follow-me {
+  color: #000000;
+  font-family: 'Splash', cursive;
+  font-size: 1.1rem;
+  z-index: 10;
+}
+
+.-me::before,
+.mf-cursor.-pointer::before {
+  transform: scale(1.9);
+}
