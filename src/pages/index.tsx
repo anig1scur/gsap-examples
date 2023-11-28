@@ -37,7 +37,7 @@ function Box() {
       data-scroll="top bottom center center"
       data-bg-img="https://cdn.pixabay.com/photo/2023/10/01/16/01/rose-8287698_640.jpg"
       data-bg-color="#574f7d"
-      className="align-items-center relative flex min-h-screen w-screen flex-col justify-center border-2 border-blue-200 text-center text-8xl"
+      className="align-items-center relative flex min-h-screen w-screen flex-col justify-center text-center text-8xl"
       ref={ref}
     >
       <div data-action="pin" className="h-64">
@@ -60,9 +60,14 @@ export default function Index() {
     let ctx = gsap.context(() => {
       const boxes = gsap.utils.toArray("[data-scroll]") as HTMLDivElement[];
       boxes.forEach((box) => {
+        const tColor = box.getAttribute("data-text-color");
+
         const updateBg = () =>
           gsap
             .timeline()
+            .to(".page", {
+              color: tColor || "#fff",
+            })
             .to(".page-bg-color", {
               backgroundColor: box.getAttribute("data-bg-color") || "",
               duration: 0.2,
@@ -134,10 +139,19 @@ export default function Index() {
         <div
           data-scroll="top bottom center center"
           data-bg-img="https://cdn.pixabay.com/photo/2023/10/18/10/28/bird-8323639_640.jpg"
-          data-bg-color="#FEFAE0"
+          data-bg-color="#B99470"
           className="f box3"
         >
           3
+        </div>
+        <div
+          data-scroll="top bottom center center"
+          data-bg-img="https://cdn.pixabay.com/photo/2023/09/01/22/16/keyboard-8227845_640.png"
+          data-bg-color="#FEFAE0"
+          className="f box4"
+          data-text-color="#665"
+        >
+          4
         </div>
       </div>
     </div>
