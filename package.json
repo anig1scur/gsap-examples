@@ -37,7 +37,6 @@
     "vite-plugin-mkcert": "^1.17.1",
     "vite-tsconfig-paths": "^4.2.1"
   },
-  "main": "index.js",
   "repository": "git@github.com:anig1scur/gsap-examples.git",
   "author": "anig1scur <anigiscur@gmail.com>",
   "license": "MIT",

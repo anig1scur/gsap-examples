@@ -1,11 +1,57 @@
 import "./index.css";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-// import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 import { useEffect, useRef } from "react";
 
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
 gsap.registerPlugin(ScrollTrigger);
-// gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+function Box() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        // markers: true,
+        pinSpacing: false,
+        invalidateOnRefresh: true,
+        immediateRender: false,
+        toggleActions: "restart none none reverse",
+        trigger: ref.current,
+        pin: "[data-action='pin']",
+        start: "top center",
+        end: "bottom center",
+        scrub: true,
+        animation: gsap.to("[data-action='disappear']", {
+          scale: 0.3,
+          opacity: 0,
+          yPercent: 50,
+        }),
+      });
+    }, ref);
+    return () => ctx.revert();
+  }, [ref]);
+
+  return (
+    <div
+      data-scroll="top bottom center center"
+      data-bg-img="https://cdn.pixabay.com/photo/2023/10/01/16/01/rose-8287698_640.jpg"
+      data-bg-color="#574f7d"
+      className="align-items-center relative flex min-h-screen w-screen flex-col justify-center border-2 border-blue-200 text-center text-8xl"
+      ref={ref}
+    >
+      <div data-action="pin" className="h-64">
+        I'm pinned
+      </div>
+      <div className="h-screen">
+        <div data-action="disappear" className="h-96">
+          I will disappear
+        </div>
+        <div>I will go </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Index() {
   const app = useRef<HTMLDivElement>(null);
@@ -47,7 +93,7 @@ export default function Index() {
           ScrollTrigger.create({
             trigger: box,
             start: `${startEnd[0] || "top"} ${startEnd[2] || "center"}`,
-            markers: true,
+            // markers: true,
             end: `${startEnd[1] || "bottom"} ${startEnd[3] || "center"}`,
             onEnter: updateBg,
             onEnterBack: updateBg,
@@ -84,6 +130,7 @@ export default function Index() {
         >
           2
         </div>
+        <Box />
         <div
           data-scroll="top bottom center center"
           data-bg-img="https://cdn.pixabay.com/photo/2023/10/18/10/28/bird-8323639_640.jpg"

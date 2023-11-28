@@ -2,4 +2,6 @@
 
 react + gsap
 
-## 1. scrollerTrigger
+## 1. ScrollTrigger
+
+## 2. pinned element
