@@ -5,9 +5,20 @@
   background: linear-gradient(to top, var(--bg-color) 0%, transparent 50%), black;
 
   &-content {
-    padding: 60px 0;
     margin: 0 auto;
     height: 100vh;
+  }
+
+  &-quote {
+    display: block;
+    height: 50px;
+    border-radius: 5px 18px 18px 18px;
+    padding: 15px 20px;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+
   }
 
   &-button {
@@ -18,7 +29,11 @@
     font-size: 17px;
     color: #191919;
     font-weight: 500;
-    margin-bottom: 20px;
+  }
+
+  &-title-img {
+    width: 50%;
+    margin: 0 auto;
   }
 
 
@@ -31,10 +46,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-
-    &-title-img {
-      width: 50%;
-    }
 
     &-intro {
       width: 70%;
@@ -60,7 +71,6 @@
       font-size: 21px;
       font-weight: 500;
       text-align: center;
-      letter-spacing: 0em;
 
       color: #FFB41E;
     }
@@ -106,22 +116,8 @@
 
     &-quote {
       cursor: pointer;
-      display: block;
-
-      height: 50px;
-      border-radius: 5px 18px 18px 18px;
-
-      padding: 15px 20px;
-
-      background: rgba(255, 255, 255, 0.3);
-
-      font-size: 17px;
-      font-weight: 500;
-      line-height: 20px;
-      text-align: center;
-      letter-spacing: 0em;
       color: #FFFFFF;
-
+      background: rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(30px);
 
       &.chosen {
@@ -146,9 +142,75 @@
   }
 
   &-done {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: 100vh;
+    background-color: var(--bg-color);
+    width: min(568px, 100%);
+    margin: 0 auto;
+
+    &-bg {
+      height: 295px;
+      bottom: 80px;
+      position: absolute;
+      width: inherit;
+      background:
+        linear-gradient(180deg, var(--bg-color) 0, transparent 50%),
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        var(--bg-img);
+      background-size: cover;
+
+      &-selector {
+        cursor: pointer;
+        color: white;
+        position: relative;
+        top: calc(100% - 32px - 20px);
+        left: calc(100% - 105px - 20px);
+        width: 105px;
+        height: 32px;
+        border-radius: 50px;
+
+        background: rgba(255, 255, 255, 0.3);
+
+        box-sizing: border-box;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        backdrop-filter: blur(30px);
+        text-align: center;
+        line-height: 1.8;
+
+        &::before {
+          margin-right: 4px;
+          content: url(../assets/ic_retry_s.svg);
+          display: inline-block;
+          height: 100%;
+          position: relative;
+        }
+      }
+    }
+
+    &-content {
+      z-index: 1;
+      gap: 15px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      margin-left: 30px;
+    }
+
+    &-quote {
+      background: #FFFFFF;
+    }
+
+    &-bottom {
+      display: flex;
+      align-items: center;
+      bottom: 0;
+      position: absolute;
+      height: 80px;
+      width: inherit;
+      gap: 20px;
+      padding: 0 20px;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
   }
 }

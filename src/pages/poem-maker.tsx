@@ -3,13 +3,19 @@ import { FC, useState, useRef, CSSProperties, useLayoutEffect } from "react";
 import Intro from "@/assets/intro.png";
 import TitleImg from "@/assets/title-img.png";
 
+export type backgroundProps = {
+  color: string;
+  img: string;
+};
+
 export type Props = {
   n_lines: number;
+  min_chosen: number;
   max_chosen: number;
   bg_color: string;
   quotes: string[];
-  background_imgs: string[];
   tip?: string;
+  bg_presets: backgroundProps[];
 };
 
 enum Status {
@@ -52,8 +58,23 @@ function splitArraySymmetrically(
 const PoemMaker: FC<Props> = (props: Props) => {
   const {
     n_lines = 5,
+    min_chosen = 3,
     max_chosen = 6,
     bg_color = "#976A14",
+    bg_presets = [
+      {
+        color: "#5f9ea0",
+        img: "https://cdn.pixabay.com/photo/2023/11/21/04/12/chicken-8402334_640.jpg",
+      },
+      {
+        color: "#6f62df",
+        img: "https://cdn.pixabay.com/photo/2023/09/04/10/29/couple-8232473_640.jpg",
+      },
+      {
+        color: "#46b5d1",
+        img: "https://cdn.pixabay.com/photo/2023/11/22/18/29/white-cheeked-turaco-8406175_640.jpg",
+      },
+    ],
     tip = "用balabala创作一首独属于自己的拼贴诗",
     quotes = [
       "彪子，你太爱学习了！",
@@ -81,6 +102,7 @@ const PoemMaker: FC<Props> = (props: Props) => {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [chosen, setChosen] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>(Status.pre);
+  const [bgIdx, setBgIdx] = useState<number>(0);
 
   if (!quotes) {
     return null;
@@ -101,14 +123,17 @@ const PoemMaker: FC<Props> = (props: Props) => {
       className="poem-maker"
       style={
         {
-          "--bg-color": bg_color,
+          "--bg-color":
+            status === Status.done ? bg_presets[bgIdx].color : bg_color,
+          "--bg-img":
+            status === Status.done ? `url(${bg_presets[bgIdx].img})` : "none",
         } as CSSProperties
       }
     >
       <div className="poem-maker-content">
         {status === Status.pre && (
           <div className="poem-maker-pre">
-            <img className="poem-maker-pre-title-img" src={TitleImg} />
+            <img className="poem-maker-title-img" src={TitleImg} />
             <img className="poem-maker-pre-intro" src={Intro} />
             <button
               className="poem-maker-button"
@@ -129,7 +154,7 @@ const PoemMaker: FC<Props> = (props: Props) => {
                     <div className="poem-maker-ing-line" key={index}>
                       {line.map((quote, index) => (
                         <div
-                          className={`poem-maker-ing-quote ${
+                          className={`poem-maker-ing-quote poem-maker-quote ${
                             chosen.includes(quote) ? "chosen" : ""
                           }`}
                           data-index={chosen.indexOf(quote) + 1}
@@ -162,7 +187,14 @@ const PoemMaker: FC<Props> = (props: Props) => {
             </div>
             <button
               className="poem-maker-button"
-              onClick={() => setStatus(Status.done)}
+              onClick={() => {
+                if (chosen.length < min_chosen) {
+                  alert(`最少选择 ${min_chosen} 句台词`);
+                  return;
+                }
+
+                setStatus(Status.done);
+              }}
             >
               拼成我的专属诗歌 :D
             </button>
@@ -170,19 +202,42 @@ const PoemMaker: FC<Props> = (props: Props) => {
         )}
         {status === Status.done && (
           <div className="poem-maker-done">
-            <button
-              className="poem-maker-button"
-              onClick={() => setStatus(Status.ing)}
-            >
-              重新创作
-            </button>
+            <img className="poem-maker-title-img" src={TitleImg} />
+            <div className="poem-maker-done-content">
+              {chosen.map((quote, index) => (
+                <div
+                  className="poem-maker-done-quote poem-maker-quote"
+                  key={index}
+                >
+                  {quote}
+                </div>
+              ))}
+            </div>
+            <div className="poem-maker-done-bg">
+              <div
+                className="poem-maker-done-bg-selector"
+                onClick={() => {
+                  setBgIdx((bgIdx + 1) % bg_presets.length);
+                }}
+              >
+                更换背景
+              </div>
+            </div>
+            <div className="poem-maker-done-bottom">
+              <button
+                className="poem-maker-button"
+                onClick={() => setStatus(Status.ing)}
+              >
+                重新创作
+              </button>
 
-            <button
-              className="poem-maker-button"
-              onClick={() => setStatus(Status.done)}
-            >
-              保存分享
-            </button>
+              <button
+                className="poem-maker-button"
+                onClick={() => setStatus(Status.done)}
+              >
+                保存分享
+              </button>
+            </div>
           </div>
         )}
       </div>
